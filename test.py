@@ -104,7 +104,7 @@ if __name__ == '__main__':
 
     print(data)
     '''
-    sock.send(b'sdaegsg|')
+    sock.send(b'0x22&|')
     #time.sleep(5)
 
 
