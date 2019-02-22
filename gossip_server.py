@@ -139,6 +139,13 @@ class Gossip_Server(object):
             io_loop = tornado.ioloop.IOLoop.current()
             io_loop.spawn_callback(self.handle_connection, connection, address)
 
+    def add_con(self, address):
+        nsock = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
+        nsock.connect(address)
+        nsock.setblocking(0)
+        io_loop = tornado.ioloop.IOLoop.current()
+        io_loop.spawn_callback(self.handle_connection, nsock, address)
+
     def broadcast_heartbeat(self):
         self._check_connection()
         for addr, con in self.connection_map.items():
@@ -174,6 +181,7 @@ if __name__ == '__main__':
     g = Gossip_Server('', gossip_const.server_port, 123, 'server 1')
     #host port beat str_id
     g.socket_init()
+    g.add_con(addr)
 
 
     io_loop1 = tornado.ioloop.IOLoop.current()

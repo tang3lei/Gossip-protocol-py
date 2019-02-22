@@ -19,7 +19,7 @@ class Udp_server(threading.Thread):
             """
             if data == b'0x233':
                 self._sock.sendto(b'0x466', addr)
-                return addr
+                #return addr
 
     def send_udp_boardcast(self):
         sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
