@@ -1,11 +1,15 @@
 from tornado.httpclient import AsyncHTTPClient
 from tornado.ioloop import IOLoop
-import socket
 import tornado.web
-import functools
-import errno
 from tornado.iostream import IOStream
+import socket
+import errno
 import time
+import tornado.iostream
+import periodicCallback
+import gossip_const
+import udp_server
+import gossip_server
 
 class MainHandler(tornado.web.RequestHandler):
     def get(self):
@@ -84,27 +88,20 @@ if __name__ == '__main__':
     ])
     application.listen(8888)
     tornado.ioloop.IOLoop.current().start()
-    
-    
 
     '''
+
+
+
+    #u = udp_server.Udp_server()
+    #u.start()
     sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    #sock.bind(('',56112))
-    sock.connect(('127.0.0.1',8899))
-    '''
-        data = []
-    while True:
-        b = sock.recv(1024)
-        if b:
-            data.append(b)
-            print(b)
-        else:
-            sock.close()
-            break
+    # sock.bind(('',56112))
+    sock.connect(('127.0.0.1', 8899))
 
-    print(data)
-    '''
     sock.send(b'0x22&|')
-    #time.sleep(5)
+    time.sleep(5)
+    sock.send(b'0x22&|')
+
 
 

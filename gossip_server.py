@@ -9,6 +9,7 @@ import signal
 import sys,os
 import functools
 import gossip_const
+import udp_server
 
 
 def deal_sigint(signum, frame):
@@ -65,6 +66,7 @@ class Gossip_Server(object):
             str_list = msg.split(Message.str_delimiter())
             if str_list[0] == '0x22':
                 print('heartbeat')
+                print(msg)
                 self._time_stamp_map[addr] = tornado.ioloop.IOLoop.current().time()
 
 
@@ -162,13 +164,21 @@ if __name__ == '__main__':
 
     signal.signal(signal.SIGINT, deal_sigint)
 
+    u = udp_server.Udp_server(63112)
+    s, addr = u.send_udp_boardcast()
+    print(s, addr)
+
+    t = udp_server.Udp_server()
+    t.start()
+
     g = Gossip_Server('', gossip_const.server_port, 123, 'server 1')
     #host port beat str_id
     g.socket_init()
 
+
     io_loop1 = tornado.ioloop.IOLoop.current()
     io_loop1.add_handler(g.sock,g.connection_ready,io_loop1.READ)
 
-    p = periodicCallback.PeriodicCallback(g.broadcast_heartbeat,3).start()      #每三秒心跳一次
+    p = periodicCallback.PeriodicCallback(g.broadcast_heartbeat,30).start()      #每三十秒心跳一次
 
     io_loop1.start()
