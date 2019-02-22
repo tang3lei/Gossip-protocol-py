@@ -168,8 +168,8 @@ if __name__ == '__main__':
     s, addr = u.send_udp_boardcast()
     print(s, addr)
 
-    t = udp_server.Udp_server()
-    t.start()
+    #t = udp_server.Udp_server()
+    #t.start()
 
     g = Gossip_Server('', gossip_const.server_port, 123, 'server 1')
     #host port beat str_id

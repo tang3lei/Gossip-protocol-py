@@ -93,10 +93,11 @@ if __name__ == '__main__':
 
 
 
-    #u = udp_server.Udp_server()
-    #u.start()
+    u = udp_server.Udp_server()
+    u.start()
     sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     # sock.bind(('',56112))
+    time.sleep(5)
     sock.connect(('127.0.0.1', 8899))
 
     sock.send(b'0x22&|')
